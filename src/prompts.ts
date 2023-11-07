@@ -20,11 +20,6 @@ function INIT_MAIN_PROMPT(language: string): ChatCompletionRequestMessage {
       role: ChatCompletionRequestMessageRoleEnum.System,
       content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the conventional emoji commits convention and explain WHAT were the changes and mainly WHY the changes were done. I'll send you an output of 'git diff --staged' command, and you are to convert it into a commit message.
     ${
-      config?.MOJI_EMOJI
-        ? 'Use GitMoji convention to preface the commit.'
-        : 'Do not preface the commit with anything.'
-    }
-    ${
       config?.MOJI_DESCRIPTION
         ? 'Add a short description of WHY the changes are done after the commit message. Don\'t start it with "This commit", just describe the changes.'
         : 'Don\'t add any descriptions to the commit, only commit message.'

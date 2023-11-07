@@ -22,7 +22,6 @@ export enum CONFIG_KEYS {
    MOJI_MODEL = 'MOJI_MODEL',
    MOJI_LANGUAGE = 'MOJI_LANGUAGE',
    MOJI_MESSAGE_TEMPLATE_PLACEHOLDER = 'MOJI_MESSAGE_TEMPLATE_PLACEHOLDER',
-   MOJI_PROMPT_MODULE = 'MOJI_PROMPT_MODULE',
 }
 
 export const DEFAULT_MODEL_TOKEN_LIMIT = 4096
@@ -124,6 +123,7 @@ export const configValidators = {
             'gpt-4',
             'gpt-3.5-turbo-16k',
             'gpt-3.5-turbo-0613',
+            'ft:gpt-3.5-turbo-0613:nyxb::8HxpgD3D',
          ].includes(value),
       `${value} is not supported yet, use 'gpt-4', 'gpt-3.5-turbo-16k' (default), 'gpt-3.5-turbo-0613' or 'gpt-3.5-turbo'`,
       )
@@ -135,16 +135,6 @@ export const configValidators = {
          value.startsWith('$'),
       `${value} must start with $, for example: '$msg'`,
       )
-      return value
-   },
-
-   [CONFIG_KEYS.MOJI_PROMPT_MODULE](value: any) {
-      validateConfig(
-         CONFIG_KEYS.MOJI_PROMPT_MODULE,
-         ['conventional-commit', '@commitlint', 'conventional-emoji-commit'].includes(value),
-      `${value} is not supported yet, use '@commitlint' or 'conventional-commit' (default)`,
-      )
-
       return value
    },
 }
@@ -164,11 +154,10 @@ export function getConfig(): ConfigType | null {
       MOJI_OPENAI_BASE_PATH: process.env.MOJI_OPENAI_BASE_PATH,
       MOJI_DESCRIPTION: process.env.MOJI_DESCRIPTION === 'true',
       MOJI_EMOJI: process.env.MOJI_EMOJI === 'true',
-      MOJI_MODEL: process.env.MOJI_MODEL || 'gpt-3.5-turbo-16k',
+      MOJI_MODEL: process.env.MOJI_MODEL || 'ft:gpt-3.5-turbo-0613:nyxb::8HxpgD3D',
       MOJI_LANGUAGE: process.env.MOJI_LANGUAGE || 'en',
       MOJI_MESSAGE_TEMPLATE_PLACEHOLDER:
       process.env.MOJI_MESSAGE_TEMPLATE_PLACEHOLDER || '$msg',
-      MOJI_PROMPT_MODULE: process.env.MOJI_PROMPT_MODULE || 'conventional-commit',
    }
 
    const configExists = existsSync(configPath)
