@@ -27,10 +27,6 @@ jobs:
       - name: Install
         run: nyxci
 
-      - run: npm start
+      - run: npx github-craftchangelogs
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
