@@ -1,6 +1,6 @@
 {
   "localLanguage": "française",
-  "commitFix": "corriger(server.ts) : changer la casse de la variable de port de minuscules à majuscules (PORT)",
-  "commitFeat": "fonctionnalité(server.ts) : ajouter la prise en charge de la variable d'environnement process.env.PORT",
+  "commitFix": "🩹 corriger(server.ts) : changer la casse de la variable de port de minuscules à majuscules (PORT)",
+  "commitFeat": "✨ fonctionnalité(server.ts) : ajouter la prise en charge de la variable d'environnement process.env.PORT",
   "commitDescription": "La variable de port est maintenant nommée PORT, ce qui améliore la cohérence avec les conventions de nommage car PORT est une constante. La prise en charge d'une variable d'environnement permet à l'application d'être plus flexible car elle peut maintenant s'exécuter sur n'importe quel port disponible spécifié via la variable d'environnement process.env.PORT."
 }
