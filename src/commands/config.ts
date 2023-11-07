@@ -134,56 +134,43 @@ export type ConfigType = {
 
 const configPath = pathJoin(homedir(), '.conmitmoji')
 
-export function getConfig(): ConfigType | null {
-   const configFromEnv = {
-      MOJI_OPENAI_API_KEY: process.env.MOJI_OPENAI_API_KEY,
-      MOJI_OPENAI_MAX_TOKENS: process.env.MOJI_OPENAI_MAX_TOKENS
-         ? Number(process.env.MOJI_OPENAI_MAX_TOKENS)
-         : undefined,
-      MOJI_OPENAI_BASE_PATH: process.env.MOJI_OPENAI_BASE_PATH,
-      MOJI_DESCRIPTION: process.env.MOJI_DESCRIPTION === 'true',
-      MOJI_MODEL: process.env.MOJI_MODEL || 'gpt-4-1106-preview',
-      MOJI_LANGUAGE: process.env.MOJI_LANGUAGE || 'en',
-      MOJI_MESSAGE_TEMPLATE_PLACEHOLDER:
-      process.env.MOJI_MESSAGE_TEMPLATE_PLACEHOLDER || '$msg',
+export function getConfig(): ConfigType {
+   // Lade zuerst die globale Konfiguration, wenn verfügbar.
+   let globalConfig: ConfigType = {}
+   if (existsSync(configPath)) {
+      const configFile = readFileSync(configPath, 'utf8')
+      globalConfig = iniParse(configFile) as ConfigType
    }
 
-   const configExists = existsSync(configPath)
-   if (!configExists)
-      return configFromEnv
+   // Lade die lokalen .env Variablen.
+   dotenv.config()
 
-   const configFile = readFileSync(configPath, 'utf8')
-   const config = iniParse(configFile)
+   // Erstelle eine kombinierte Konfiguration, beginnend mit der globalen Konfiguration.
+   const combinedConfig: ConfigType = { ...globalConfig }
 
-   for (const configKey of Object.keys(config)) {
-      if (
-         !config[configKey]
-      || ['null', 'undefined'].includes(config[configKey])
-      ) {
-         config[configKey] = undefined
-         continue
+   // Überschreibe mit Umgebungsvariablen, falls vorhanden.
+   Object.values(CONFIG_KEYS).forEach((configKey) => {
+      const envValue = process.env[configKey]
+      if (envValue !== undefined)
+         combinedConfig[configKey as keyof ConfigType] = envValue
+   })
+
+   // Validiere die kombinierte Konfiguration.
+   Object.keys(combinedConfig).forEach((key) => {
+      const configKey = key as keyof ConfigType
+      const value = combinedConfig[configKey]
+      if (value !== undefined && configValidators[configKey]) {
+         try {
+            combinedConfig[configKey] = configValidators[configKey](value, combinedConfig)
+         }
+         catch (error) {
+            console.error(`Validation failed for ${configKey}:`, error)
+            process.exit(1)
+         }
       }
-      try {
-         const validator = configValidators[configKey as CONFIG_KEYS]
-         const validValue = validator(
-            config[configKey] ?? configFromEnv[configKey as CONFIG_KEYS],
-            config,
-         )
+   })
 
-         config[configKey] = validValue
-      }
-      catch (error) {
-         outro(
-        `'${configKey}' name is invalid, it should be either 'MOJI_${configKey.toUpperCase()}' or it doesn't exist.`,
-         )
-         outro(
-        `Manually fix the '.env' file or global '~/.conmitmoji' config file.`,
-         )
-         process.exit(1)
-      }
-   }
-
-   return config
+   return combinedConfig
 }
 
 export function setConfig(keyValues: [key: string, value: string][]) {
