@@ -18,28 +18,21 @@ export const IDENTITY
 export const EMOJIS
   = { 'fix': '🩹', 'ci': '🤖', 'build': '🛠️', 'chore': '🧹', 'docs': '📚', 'feat': '✨', 'perf': '⚡️', 'refactor': '♻️', 'revert': '⏪', 'style': '🎨', 'test': '🧪', 'animations': '🎭', 'common': '🌍', 'compiler': '🔍', 'compiler-cli': '🔧', 'core': '💙', 'elements': '🧩', 'forms': '📝', 'http': '📡', 'language-service': '🗣️', 'platform-browser': '🌐', 'platform-browser-dynamic': '🌌', 'platform-server': '🖥️', 'platform-webworker': '🕸️', 'platform-webworker-dynamic': '🕷️', 'router': '🛣️', 'service-worker': '📊', 'upgrade': '⬆️', 'packaging': '📦', 'changelog': '📜', 'aio': '📘' }
 
-function INIT_MAIN_PROMPT(language: string): ChatCompletionRequestMessage {
-   // Erstellen Sie einen String, der die Emoji-Typ-Zuordnung darstellt
-   const emojiList = Object.entries(EMOJIS)
-      .map(([type, emoji]) => `${emoji} - ${type}`)
-      .join(', ')
+const emojis = JSON.stringify(EMOJIS)
+   .replace(/[{}"]/g, '')
+   .replace(/,/g, ',\n')
 
-   const descriptionInstruction = config?.MOJI_DESCRIPTION
-      ? 'Include a short description explaining WHY the changes were made.'
-      : 'Do not include a description unless the changes are complex.'
-
-   const issueInstruction = 'Do not reference issues unless they are mentioned in the git diff output.'
-
-   return {
-      role: ChatCompletionRequestMessageRoleEnum.System,
-      content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the conventional commit convention. When generating a commit message based on the 'git diff --staged' output provided, follow these guidelines:
-     - Start each commit with an emoji that corresponds to the change type: ${emojiList}.
-     - Follow the conventional commit structure: <emoji> <type>(<scope>): <description>.
-     - ${descriptionInstruction}
-     - ${issueInstruction}
-     Remember to use the present tense and keep lines under 74 characters. Use ${language} for the commit message.`,
-   }
-}
+const INIT_MAIN_PROMPT = (language: string): ChatCompletionRequestMessage => ({
+   role: ChatCompletionRequestMessageRoleEnum.System,
+   content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the conventional commit convention and explain WHAT were the changes and mainly WHY the changes were done. I'll send you an output of 'git diff --staged' command, and you are to convert it into a commit message.
+   - Use the correct emoji followed directly by the type without any additional characters: ${emojis}.
+     ${
+       config?.MOJI_DESCRIPTION
+         ? 'Add a short description of WHY the changes are done after the commit message. Don\'t start it with "This commit", just describe the changes.'
+         : 'Don\'t add any descriptions to the commit, only commit message.'
+     }
+     Use the present tense. Lines must not be longer than 74 characters. Use ${language} for the commit message.`,
+})
 
 export const INIT_DIFF_PROMPT: ChatCompletionRequestMessage = {
    role: ChatCompletionRequestMessageRoleEnum.User,
@@ -69,13 +62,14 @@ export const INIT_DIFF_PROMPT: ChatCompletionRequestMessage = {
                 });`,
 }
 
-function INIT_CONSISTENCY_PROMPT(translation: ConsistencyPrompt): ChatCompletionRequestMessage {
-   return {
-      role: ChatCompletionRequestMessageRoleEnum.Assistant,
-      content: `
-${config?.MOJI_DESCRIPTION ? translation.commitDescription : ''}`,
-   }
-}
+const INIT_CONSISTENCY_PROMPT = (
+   translation: ConsistencyPrompt,
+): ChatCompletionRequestMessage => ({
+   role: ChatCompletionRequestMessageRoleEnum.Assistant,
+   content: `${translation.commitFix} :
+ ${translation.commitFeat}
+ ${config?.MOJI_DESCRIPTION ? translation.commitDescription : ''}`,
+})
 
 export async function getMainCommitPrompt(): Promise<
   ChatCompletionRequestMessage[]
