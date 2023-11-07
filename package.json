@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "prepublishOnly": "nyxr build",
-    "build": "rm -rf dist && bun --bun run esbuild.config.js",
+    "build": "bun --bun run esbuild.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "run vitest --coverage",

@@ -4,7 +4,6 @@ import { cli } from 'cleye'
 
 import packageJSON from '../package.json'
 import { commit } from './commands/commit'
-import { commitlintConfigCommand } from './commands/commitlint'
 import { configCommand } from './commands/config'
 import { hookCommand, isHookCalled } from './commands/githook.js'
 import { prepareCommitMessageHook } from './commands/prepare-commit-msg-hook'
@@ -16,7 +15,7 @@ cli(
    {
       version: packageJSON.version,
       name: 'conmitmoji',
-      commands: [configCommand, hookCommand, commitlintConfigCommand],
+      commands: [configCommand, hookCommand],
       flags: {},
       ignoreArgv: type => type === 'unknown-flag' || type === 'argument',
       help: { description: packageJSON.description },
