@@ -112,7 +112,6 @@ export const configValidators = {
             'gpt-4',
             'gpt-3.5-turbo-16k',
             'gpt-3.5-turbo-0613',
-            'ft:gpt-3.5-turbo-0613:nyxb::8HxpgD3D',
             'gpt-4-1106-preview',
          ].includes(value),
       `${value} is not supported yet, use 'gpt-4-1106-preview', 'gpt-4', 'gpt-3.5-turbo-16k' (default), 'gpt-3.5-turbo-0613' or 'gpt-3.5-turbo'`,

@@ -14,5 +14,6 @@ export default nyxb({
       'unused-imports/no-unused-vars': 0,
       'ts/no-var-requires': 0,
       'ts/no-require-imports': 0,
+      'nyxb/top-level-function': 0,
    },
 })
