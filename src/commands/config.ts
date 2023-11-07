@@ -141,7 +141,7 @@ export const configValidators = {
    [CONFIG_KEYS.MOJI_PROMPT_MODULE](value: any) {
       validateConfig(
          CONFIG_KEYS.MOJI_PROMPT_MODULE,
-         ['conventional-commit', '@commitlint'].includes(value),
+         ['conventional-commit', '@commitlint', 'conventional-emoji-commit'].includes(value),
       `${value} is not supported yet, use '@commitlint' or 'conventional-commit' (default)`,
       )
 
