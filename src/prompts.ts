@@ -21,21 +21,23 @@ export const EMOJIS
 function INIT_MAIN_PROMPT(language: string): ChatCompletionRequestMessage {
    // Erstellen Sie einen String, der die Emoji-Typ-Zuordnung darstellt
    const emojiList = Object.entries(EMOJIS)
-      .map(([type, emoji]) => `${emoji} ${type}: `)
-      .join('\n')
+      .map(([type, emoji]) => `${emoji} - ${type}`)
+      .join(', ')
+
+   const descriptionInstruction = config?.MOJI_DESCRIPTION
+      ? 'Include a short description explaining WHY the changes were made.'
+      : 'Do not include a description unless the changes are complex.'
+
+   const issueInstruction = 'Do not reference issues unless they are mentioned in the git diff output.'
 
    return {
       role: ChatCompletionRequestMessageRoleEnum.System,
-      content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the conventional commit convention. Each commit message should start with an emoji that corresponds to the change type, followed by the change type and a description. Here is the list of emojis for each change type:
-     \n${emojiList}\n
-     Based on the 'git diff --staged' output provided, convert it into a commit message that adheres to the following structure:
-     <emoji> <type>(<scope>): <description>
-     ${
-       config?.MOJI_DESCRIPTION
-         ? 'Include a short description of WHY the changes were done after the commit message.'
-         : 'Don\'t add any descriptions to the commit, only commit message.'
-     }
-     Use the present tense. Lines must not be longer than 74 characters. Use ${language} for the commit message.`,
+      content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the conventional commit convention. When generating a commit message based on the 'git diff --staged' output provided, follow these guidelines:
+     - Start each commit with an emoji that corresponds to the change type: ${emojiList}.
+     - Follow the conventional commit structure: <emoji> <type>(<scope>): <description>.
+     - ${descriptionInstruction}
+     - ${issueInstruction}
+     Remember to use the present tense and keep lines under 74 characters. Use ${language} for the commit message.`,
    }
 }
 
