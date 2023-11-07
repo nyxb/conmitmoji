@@ -18,7 +18,6 @@ export enum CONFIG_KEYS {
    MOJI_OPENAI_MAX_TOKENS = 'MOJI_OPENAI_MAX_TOKENS',
    MOJI_OPENAI_BASE_PATH = 'MOJI_OPENAI_BASE_PATH',
    MOJI_DESCRIPTION = 'MOJI_DESCRIPTION',
-   MOJI_EMOJI = 'MOJI_EMOJI',
    MOJI_MODEL = 'MOJI_MODEL',
    MOJI_LANGUAGE = 'MOJI_LANGUAGE',
    MOJI_MESSAGE_TEMPLATE_PLACEHOLDER = 'MOJI_MESSAGE_TEMPLATE_PLACEHOLDER',
@@ -87,16 +86,6 @@ export const configValidators = {
       return value
    },
 
-   [CONFIG_KEYS.MOJI_EMOJI](value: any) {
-      validateConfig(
-         CONFIG_KEYS.MOJI_EMOJI,
-         typeof value === 'boolean',
-         'Must be true or false',
-      )
-
-      return value
-   },
-
    [CONFIG_KEYS.MOJI_LANGUAGE](value: any) {
       validateConfig(
          CONFIG_KEYS.MOJI_LANGUAGE,
@@ -153,7 +142,6 @@ export function getConfig(): ConfigType | null {
          : undefined,
       MOJI_OPENAI_BASE_PATH: process.env.MOJI_OPENAI_BASE_PATH,
       MOJI_DESCRIPTION: process.env.MOJI_DESCRIPTION === 'true',
-      MOJI_EMOJI: process.env.MOJI_EMOJI === 'true',
       MOJI_MODEL: process.env.MOJI_MODEL || 'ft:gpt-3.5-turbo-0613:nyxb::8HxpgD3D',
       MOJI_LANGUAGE: process.env.MOJI_LANGUAGE || 'en',
       MOJI_MESSAGE_TEMPLATE_PLACEHOLDER:

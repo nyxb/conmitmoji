@@ -59,8 +59,7 @@ export const INIT_DIFF_PROMPT: ChatCompletionRequestMessage = {
 function INIT_CONSISTENCY_PROMPT(translation: ConsistencyPrompt): ChatCompletionRequestMessage {
    return {
       role: ChatCompletionRequestMessageRoleEnum.Assistant,
-      content: `${config?.MOJI_EMOJI ? '🐛 ' : ''}${translation.commitFix}
-${config?.MOJI_EMOJI ? '✨ ' : ''}${translation.commitFeat}
+      content: `
 ${config?.MOJI_DESCRIPTION ? translation.commitDescription : ''}`,
    }
 }
