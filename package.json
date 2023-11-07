@@ -19,12 +19,12 @@
   "module": "index.mjs",
   "types": "index.d.ts",
   "bin": {
-    "conmitmoji": "./out/cli.cjs",
-    "moji": "./out/cli.cjs"
+    "conmitmoji": "./dist/cli.cjs",
+    "moji": "./dist/cli.cjs"
   },
   "files": [
-    "out/cli.cjs",
-    "out/tiktoken_bg.wasm"
+    "dist/cli.cjs",
+    "dist/tiktoken_bg.wasm"
   ],
   "scripts": {
     "prepublishOnly": "nyxr build",
