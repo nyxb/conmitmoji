@@ -1,7 +1,7 @@
 {
   "name": "conmitmoji",
   "type": "module",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "packageManager": "bun@1.0.4",
   "description": "",
   "author": "Dennis Ollhoff <contact@nyxb.email>",
