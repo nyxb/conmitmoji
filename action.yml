@@ -1,5 +1,5 @@
 name: ConmitMoji — improve commits with AI 🧙
-description: Enhances your commit messages with meaningful AI-generated messages aligned with the Conventional Emoji Commits when you push to remote.
+description: Automated remote push commits improved with Conventional Emoji Commits.
 author: 'https://github.com/nyxb'
 repo: 'https://github.com/nyxb/conmitmoji/tree/github-action'
 branding:
