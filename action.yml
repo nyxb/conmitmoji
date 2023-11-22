@@ -1,21 +1,23 @@
 name: ConmitMoji — improve commits with AI 🧙
-description: Replaces lame commit messages with meaningful AI-generated messages when you push to remote
+description: Enhances your commit messages with meaningful AI-generated messages aligned with the Conventional Emoji Commits (https://conventional-emoji-commits.site) when you push to remote.
 author: 'https://github.com/nyxb'
 repo: 'https://github.com/nyxb/conmitmoji/tree/github-action'
 branding:
-  icon: git-commit
-  color: green
+  icon: 'git-commit'
+  color: 'purple'
 keywords:
   - git
   - chatgpt
   - gpt
   - ai
   - openai
-  - opencommit
+  - conmitmoji
   - aicommit
   - aicommits
   - gptcommit
   - commit
+  - commits
+  - conventionalEmojiCommits
 
 inputs:
   GITHUB_TOKEN:
