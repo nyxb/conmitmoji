@@ -112,9 +112,9 @@ export const configValidators = {
             'gpt-4',
             'gpt-3.5-turbo-16k',
             'gpt-3.5-turbo-0613',
-            'gpt-4-1106-preview',
+            'gpt-4-turbo',
          ].includes(value),
-      `${value} is not supported yet, use 'gpt-4-1106-preview', 'gpt-4', 'gpt-3.5-turbo-16k' (default), 'gpt-3.5-turbo-0613' or 'gpt-3.5-turbo'`,
+      `${value} is not supported yet, use 'gpt-4-turbo', 'gpt-4', 'gpt-3.5-turbo-16k' (default), 'gpt-3.5-turbo-0613' or 'gpt-3.5-turbo'`,
       )
       return value
    },
@@ -142,7 +142,7 @@ export const getConfig = (): ConfigType | null => {
          : undefined,
       MOJI_OPENAI_BASE_PATH: process.env.MOJI_OPENAI_BASE_PATH,
       MOJI_DESCRIPTION: process.env.MOJI_DESCRIPTION === 'true',
-      MOJI_MODEL: process.env.MOJI_MODEL || 'gpt-4-1106-preview',
+      MOJI_MODEL: process.env.MOJI_MODEL || 'gpt-4-turbo',
       MOJI_LANGUAGE: process.env.MOJI_LANGUAGE || 'en',
       MOJI_MESSAGE_TEMPLATE_PLACEHOLDER:
        process.env.MOJI_MESSAGE_TEMPLATE_PLACEHOLDER || '$msg',

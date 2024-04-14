@@ -72,7 +72,7 @@ moji config set MOJI_MODEL=gpt-4
 
 ### Switch to GPT-4 or other models
 
-By default, ConmitMoji uses `gpt-4-1106-preview` model.
+By default, ConmitMoji uses `gpt-4-turbo` model.
 
 You may switch to GPT-4 which performs better, but costs ~x15 times more 🤠
 
@@ -255,6 +255,6 @@ You pay for your requests to OpenAI API on your own.
 
 ConmitMoji stores your key locally.
 
-ConmitMoji by default uses gpt-4-1106-preview model, it should not exceed $0.10 per casual working day.
+ConmitMoji by default uses gpt-4-turbo model, it should not exceed $0.10 per casual working day.
 
 You may switch to gpt-4, it's better, but more expensive.
