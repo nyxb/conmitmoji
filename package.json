@@ -33,7 +33,7 @@
     "lint:fix": "eslint --fix .",
     "test": "nyxr vitest --coverage",
     "typecheck": "tsc --noEmit",
-    "release": "bumping --commit --push --tag && pnpm publish",
+    "release": "bumping --commit --push --tag && npm publish",
     "watch": "nyxr -S build -- --sourcemap --watch",
     "start": "bun --bun run ./dist/cli.cjs",
     "dev": "bun --bun run ./src/cli.ts"
