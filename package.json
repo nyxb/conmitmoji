@@ -27,7 +27,6 @@
     "dist/tiktoken_bg.wasm"
   ],
   "scripts": {
-    "test1": "nyxr src/testExtractor.js",
     "prepublishOnly": "nyxr build",
     "build": "rm -rf dist && bun --bun run esbuild.config.js",
     "lint": "eslint .",
