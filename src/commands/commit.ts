@@ -12,6 +12,7 @@ import {
 } from '@tyck/prompts'
 
 import { generateCommitMessageByDiff } from '../generateCommitMessageFromGitDiff'
+
 import {
    assertGitRepo,
    getChangedFiles,
@@ -20,6 +21,10 @@ import {
    gitAdd,
 } from '../utils/git'
 import { trytm } from '../utils/trytm'
+
+import extractIssueKeyFromBranchName from '../utils/issueKeyExtractor'
+
+// Importiere die Funktion zur Extraktion des Issue-Keys
 import { getConfig } from './config'
 
 const config = getConfig()
@@ -45,6 +50,10 @@ async function generateCommitMessageFromGitDiff(diff: string, extraArgs: string[
 
    try {
       let commitMessage = await generateCommitMessageByDiff(diff)
+
+      const issueKey = extractIssueKeyFromBranchName()
+      if (issueKey)
+         commitMessage += `\n\nRefs ${issueKey}` // Füge den Issue-Key zur Commit-Nachricht hinzu
 
       const messageTemplate = checkMessageTemplate(extraArgs)
       if (
