@@ -3,8 +3,8 @@ description: Automated remote push commits improved with Conventional Emoji Comm
 author: 'https://github.com/nyxb'
 repo: 'https://github.com/nyxb/conmitmoji/tree/github-action'
 branding:
-  icon: 'git-commit'
-  color: 'purple'
+  icon: git-commit
+  color: purple
 keywords:
   - git
   - chatgpt

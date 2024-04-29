@@ -139,6 +139,7 @@ async function improveCommitMessages(
 
    // Check if there are actually any changes in the commit messages
    const messagesChanged = improvedMessagesWithSHAs.some(
+      // @ts-expect-error is fine
       ({ sha, msg }, index) => msg !== commitsToImprove[index].message,
    )
 
