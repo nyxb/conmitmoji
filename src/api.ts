@@ -40,7 +40,7 @@ if (!apiKey && command !== 'config' && mode !== CONFIG_MODES.set) {
    process.exit(1)
 }
 
-const MODEL = config?.MOJI_MODEL || 'gpt-3.5-turbo'
+const MODEL = config?.MOJI_MODEL || 'gpt-4o'
 
 class OpenAi {
    private openAiApiConfiguration = new OpenAiApiConfiguration({
